@@ -1,0 +1,37 @@
+{
+  "name": "@sdewa/browser-base",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/browser-base.umd.cjs",
+  "module": "./dist/browser-base.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/browser-base.js",
+      "require": "./dist/browser-base.umd.cjs",
+      "types": "./dist/browser-base.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@vitest/browser": "^2.0.5",
+    "fake-indexeddb": "^6.0.0",
+    "playwright": "^1.46.1",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "vitest": "^2.0.5"
+  },
+  "dependencies": {
+    "vite-plugin-dts": "^4.1.0"
+  }
+}
