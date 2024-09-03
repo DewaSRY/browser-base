@@ -1,4 +1,5 @@
 import Collection from "@/api/collection";
+import { documentId } from "@/types";
 
 /**
  * use to set new object
@@ -6,6 +7,11 @@ import Collection from "@/api/collection";
  * @param object
  * @returns
  */
+
+export default function set<T>(
+  collection: Collection<T>,
+  object: Partial<T>
+): Promise<documentId<T>>;
 export default function set<T>(collection: Collection<T>, object: Partial<T>) {
   const { _filter, lf, _browserBase } = collection;
   return new Promise((resolve, reject) => {
@@ -22,18 +28,21 @@ export default function set<T>(collection: Collection<T>, object: Partial<T>) {
       }).then(() => {
         if (!prevobject) {
           reject(
-            _browserBase._logger.error(`object with id ${_filter.id} not found`)
+            _browserBase._logger.error(
+              `object with id '${_filter.id}' not found`
+            )
           );
-          return;
+        } else {
+          let newObject = {
+            ...prevobject,
+            ...object,
+            _id: _filter.id,
+          };
+          let { _id, ...updatedata } = newObject;
+          lf.setItem<T>(_filter.id, updatedata as T);
+          _browserBase._logger.log("success update ", newObject as Object);
+          resolve(newObject);
         }
-
-        let newObject = {
-          ...prevobject,
-          ...object,
-        };
-        lf.setItem<T>(_filter.id, newObject as T);
-        _browserBase._logger.log("success update ", newObject as Object);
-        resolve(prevobject);
       });
     }
   });

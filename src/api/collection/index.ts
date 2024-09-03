@@ -63,9 +63,8 @@ export default class Collection<T> {
     fkDelete<typeof this, T>(this);
   }
 
-  public set(object: Partial<T>) {
-    if (!this._filter) return;
-    fkSet<T>(this, object);
+  public async set(object: Partial<T>) {
+    return await fkSet<T>(this, object);
   }
   public async get() {
     return await fkGet(this);

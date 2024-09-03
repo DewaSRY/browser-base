@@ -13,11 +13,10 @@ export default function orderBy<T>(
       order: "",
       id: "",
     };
-  } else {
-    collection._filter = {
-      ...collection._filter,
-      orderBy,
-      order,
-    };
   }
+  collection._filter = {
+    ...collection._filter,
+    orderBy,
+    order,
+  };
 }

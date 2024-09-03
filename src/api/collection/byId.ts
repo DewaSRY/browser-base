@@ -9,10 +9,9 @@ export default function byId<T>(collection: Collection<T>, id: string) {
       order: "",
       id: "",
     };
-  } else {
-    collection._filter = {
-      ...collection._filter,
-      id,
-    };
   }
+  collection._filter = {
+    ...collection._filter,
+    id,
+  };
 }

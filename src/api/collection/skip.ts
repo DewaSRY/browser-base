@@ -9,10 +9,10 @@ export default function skip<T>(collection: Collection<T>, skip: number) {
       order: "",
       id: "",
     };
-  } else {
-    collection._filter = {
-      ...collection._filter,
-      skip,
-    };
   }
+
+  collection._filter = {
+    ...collection._filter,
+    skip,
+  };
 }

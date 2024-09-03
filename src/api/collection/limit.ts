@@ -9,10 +9,9 @@ export default function limit<T>(collection: Collection<T>, limit: number) {
       order: "",
       id: "",
     };
-  } else {
-    collection._filter = {
-      ...collection._filter,
-      limit,
-    };
   }
+  collection._filter = {
+    ...collection._filter,
+    limit,
+  };
 }
