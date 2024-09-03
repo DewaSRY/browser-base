@@ -10,6 +10,7 @@ import { CollectionFilter } from "@/types";
 import ftLimit from "./limit";
 import ftOrderBy from "./orderBy";
 import ftSkip from "./skip";
+import fkById from "./byId";
 
 //action
 import ftAdd from "@/api/actions/add";
@@ -46,6 +47,10 @@ export default class Collection<T> {
   }
   public skip(skip: number) {
     ftSkip(this, skip);
+    return this as Collection<T>;
+  }
+  public byId(id: string) {
+    fkById(this, id);
     return this as Collection<T>;
   }
 
