@@ -28,11 +28,12 @@ export default class Logger {
     object?: T
   ) {
     if (!this.isRunLog) return;
+    // const { } = this.browserBase;
     let style = BASE_STYLE + `background-color: ${begraoundColor}`;
     if (object) {
-      console.log("%clocalbase", style, message, object);
+      console.log("%cBrowserBase", style, message, object);
     } else {
-      console.log("%clocalbase", style, message);
+      console.log("%cBrowserBase", style, message);
     }
   }
   public log<T extends Object>(message: string, object?: T) {

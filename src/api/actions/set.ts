@@ -41,6 +41,7 @@ export default function set<T>(collection: Collection<T>, object: Partial<T>) {
           let { _id, ...updatedata } = newObject;
           lf.setItem<T>(_filter.id, updatedata as T);
           _browserBase._logger.log("success update ", newObject as Object);
+          collection._resetFilter();
           resolve(newObject);
         }
       });

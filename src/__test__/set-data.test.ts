@@ -14,13 +14,10 @@ describe("browser-base update data", () => {
   it.fails("set will failed when set without filter", async () => {
     const name = "hallo";
     const age = 10;
-
     await userCollection.add({
       name,
       age,
     });
-    // console.log(actual);
-
     await userCollection.set({
       name: "test",
     });

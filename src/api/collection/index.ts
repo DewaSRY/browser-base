@@ -37,6 +37,12 @@ export default class Collection<T> {
     });
   }
 
+  public _resetFilter() {
+    if (this._filter) {
+      this._filter = null;
+    }
+  }
+
   public orderBy(property: keyof T, order: "desc" | "asc" = "desc") {
     ftOrderBy(this, property, order);
     return this as Collection<T>;
@@ -51,7 +57,7 @@ export default class Collection<T> {
   }
   public byId(id: string) {
     fkById(this, id);
-    return this as Collection<T>;
+    return this;
   }
 
   public async add(data: T, key?: string) {
