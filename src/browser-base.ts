@@ -1,5 +1,5 @@
-import Collection from "./collection";
-import Logger from "./utils/logger";
+import Collection from "@/api/collection";
+import Logger from "@/utils/logger";
 /**
  * BrowserBase
  */

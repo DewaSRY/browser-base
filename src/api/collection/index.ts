@@ -2,7 +2,6 @@
  *
  */
 import localForage from "localforage";
-import { documentId } from "@/types";
 import BrowserBase from "@/browser-base";
 
 import { CollectionFilter } from "@/types";
@@ -15,6 +14,8 @@ import ftSkip from "./skip";
 //action
 import ftAdd from "@/api/actions/add";
 import fkDelete from "@/api/actions/delete";
+import fkSet from "@/api/actions/set";
+import fkGet from "@/api/actions/get";
 
 // import Document from "@/api/selector/doc";
 /**
@@ -35,21 +36,6 @@ export default class Collection<T> {
     });
   }
 
-  //   public doc(docSelectionCriteria: Partial<T>): Document<T> {
-  //     return new Document<T>(this, docSelectionCriteria);
-  //   }
-  public all() {
-    let collection: documentId<T>[] = [];
-    return this.lf
-      .iterate<T, void>((value, key) => {
-        collection.push({
-          ...value,
-          _id: key,
-        });
-      })
-      .then(() => collection);
-  }
-
   public orderBy(property: keyof T, order: "desc" | "asc" = "desc") {
     ftOrderBy(this, property, order);
     return this as Collection<T>;
@@ -66,10 +52,17 @@ export default class Collection<T> {
   public async add(data: T, key?: string) {
     return await ftAdd(this, data, key);
   }
-  public async get(key: string) {
-    return await this.lf.getItem(key).then((doc) => doc);
-  }
+
   public delete() {
+    if (!this._filter) return;
     fkDelete<typeof this, T>(this);
+  }
+
+  public set(object: Partial<T>) {
+    if (!this._filter) return;
+    fkSet<T>(this, object);
+  }
+  public async get() {
+    return await fkGet(this);
   }
 }
