@@ -2,6 +2,10 @@ import Collection from "@/api/collection";
 import BrowserBase from "@/browser-base";
 // import isSubSet from "@/utils/isSubset";
 
+/**
+ *fk delete is delete factory use to delete something on data base base on the paramater pass to it
+ * @param parent
+ */
 export default function fkDelete<T, U = unknown>(parent: T) {
   if (parent instanceof BrowserBase) {
     //delete database
