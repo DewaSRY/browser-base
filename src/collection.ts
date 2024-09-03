@@ -4,6 +4,7 @@
 import localForage from "localforage";
 import { documentId } from "./types";
 import BrowserBase from "./browser-base";
+import Document from "./document";
 /**
  * Collection
  */
@@ -45,14 +46,15 @@ export default class Collection<T> {
     }
   }
 
-  public doc() {}
+  public doc(docSelectionCriteria: Partial<T>): Document<T> {
+    return new Document<T>(this, docSelectionCriteria);
+  }
   public all() {
     let collection: documentId<T>[] = [];
     return this.lf
-      .iterate((value, key) => {
-        const data: T = JSON.parse(value as string);
+      .iterate<T, void>((value, key) => {
         collection.push({
-          ...data,
+          ...value,
           _id: key,
         });
       })
@@ -75,7 +77,7 @@ export default class Collection<T> {
         key = crypto.randomUUID();
       }
       return this.lf
-        .setItem(JSON.stringify(data), key)
+        .setItem(key, data)
         .then(() => resolve({ ...data, _id: key as string }))
         .catch((_err) => {});
     });
