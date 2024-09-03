@@ -5,6 +5,7 @@ import BrowserBase from "@/browser-base";
 export default function fkDelete<T, U = unknown>(parent: T) {
   if (parent instanceof BrowserBase) {
     //delete database
+    deleteDb(parent);
   }
   if (parent instanceof Collection) {
     if (parent._filter) {
@@ -15,6 +16,10 @@ export default function fkDelete<T, U = unknown>(parent: T) {
       deleteCollection(parent);
     }
   }
+}
+function deleteDb(parent: BrowserBase) {
+  const { dbName } = parent;
+  indexedDB.deleteDatabase(dbName);
 }
 
 function deleteCollection(collection: Collection<unknown>) {

@@ -1,5 +1,8 @@
 import Collection from "@/api/collection";
 import Logger from "@/utils/logger";
+
+//action
+import fkDelete from "./api/actions/delete";
 /**
  * BrowserBase
  */
@@ -21,7 +24,7 @@ export default class BrowserBase {
   }
 
   public delete() {
-    indexedDB.deleteDatabase(this.dbName);
+    fkDelete(this);
   }
 
   public setConfig(isDbug: boolean) {
