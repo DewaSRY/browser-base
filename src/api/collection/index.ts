@@ -5,18 +5,24 @@ import localForage from "localforage";
 import { documentId } from "@/types";
 import BrowserBase from "@/browser-base";
 
+import { CollectionFilter } from "@/types";
+
+//Filter
+import ftLimit from "./limit";
+import ftOrderBy from "./orderBy";
+import ftSkip from "./skip";
+
+//action
+import ftAdd from "@/api/actions/add";
+
 // import Document from "@/api/selector/doc";
 /**
  * Collection
  */
 export default class Collection<T> {
   public lf: LocalForage;
-  public _filter = {
-    limit: 0,
-    skip: 0,
-    orderBy: "" as keyof T | "",
-    order: "" as "desc" | "asc" | "",
-  };
+  public _filter: null | CollectionFilter<T> = null;
+
   constructor(
     private readonly browserBase: BrowserBase,
     private readonly collectionName: string
@@ -67,27 +73,22 @@ export default class Collection<T> {
       })
       .then(() => collection);
   }
-  public async orderby(property: keyof T, order: "desc" | "asc" = "desc") {
-    return await this.all().then((collection) => {
-      let allCol = collection.sort((a, b) =>
-        String(a[property]).localeCompare(String(b[property]))
-      );
-      if (order == "desc") {
-        allCol = allCol.reverse();
-      }
-      return allCol;
-    });
+
+  public orderBy(property: keyof T, order: "desc" | "asc" = "desc") {
+    ftOrderBy(this, property, order);
+    return this as Collection<T>;
   }
-  public add(data: T, key?: string): Promise<documentId<T>> {
-    return new Promise((resolve, _reject) => {
-      if (!key) {
-        key = crypto.randomUUID();
-      }
-      return this.lf
-        .setItem(key, data)
-        .then(() => resolve({ ...data, _id: key as string }))
-        .catch((_err) => {});
-    });
+  public limit(limit: number) {
+    ftLimit(this, limit);
+    return this as Collection<T>;
+  }
+  public skip(skip: number) {
+    ftSkip(this, skip);
+    return this as Collection<T>;
+  }
+
+  public async add(data: T, key?: string) {
+    return await ftAdd(this, data, key);
   }
   public async get(key: string) {
     return await this.lf.getItem(key).then((doc) => doc);
