@@ -4,7 +4,8 @@
 import localForage from "localforage";
 import { documentId } from "@/types";
 import BrowserBase from "@/browser-base";
-import Document from "@/api/selector/doc";
+
+// import Document from "@/api/selector/doc";
 /**
  * Collection
  */
@@ -12,6 +13,7 @@ export default class Collection<T> {
   public lf: LocalForage;
   public _filter = {
     limit: 0,
+    skip: 0,
     orderBy: "" as keyof T | "",
     order: "" as "desc" | "asc" | "",
   };
@@ -51,9 +53,9 @@ export default class Collection<T> {
     }
   }
 
-  public doc(docSelectionCriteria: Partial<T>): Document<T> {
-    return new Document<T>(this, docSelectionCriteria);
-  }
+  //   public doc(docSelectionCriteria: Partial<T>): Document<T> {
+  //     return new Document<T>(this, docSelectionCriteria);
+  //   }
   public all() {
     let collection: documentId<T>[] = [];
     return this.lf

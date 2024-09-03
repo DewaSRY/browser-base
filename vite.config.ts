@@ -1,7 +1,7 @@
 // vite.config.js
 import { resolve } from "path";
 import { defineConfig } from "vite";
-
+import { URL, fileURLToPath } from "node:url";
 import dts from "vite-plugin-dts";
 export default defineConfig({
   plugins: [
@@ -26,5 +26,10 @@ export default defineConfig({
     //     // for externalized deps
     //   },
     // },
+  },
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
   },
 });

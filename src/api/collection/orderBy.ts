@@ -1,4 +1,4 @@
-import Collection from "@/api/selector/collection";
+import Collection from "@/api/collection";
 
 export default function orderBy<T>(
   collection: Collection<T>,

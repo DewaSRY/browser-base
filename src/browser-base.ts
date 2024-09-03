@@ -6,6 +6,7 @@ import Logger from "./utils/logger";
 export default class BrowserBase {
   private _collectioMap: Map<string, Collection<unknown>> = new Map();
   public _deleteCollectionQueue = { queue: [] as string[], running: false };
+
   public config = { debug: false };
   public _logger: Logger = new Logger(this);
   constructor(public dbName: string) {}
