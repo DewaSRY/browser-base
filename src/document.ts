@@ -1,6 +1,9 @@
 import Collection from "./collection";
 import isSubSet from "./utils/isSubset";
 import { documentId } from "./types";
+/**
+ * Document
+ */
 export default class Document<T> {
   constructor(
     private collection: Collection<T>,

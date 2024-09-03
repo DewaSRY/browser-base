@@ -1,6 +1,9 @@
 import Collection from "./collection";
 
-export class BrowserBase {
+/**
+ * BrowserBase
+ */
+export default class BrowserBase {
   private collectioMap: Map<string, Collection<unknown>> = new Map();
   public deleteCollectionQueue = { queue: [] as string[], running: false };
   public config = { debug: false };

@@ -3,10 +3,12 @@
  */
 import localForage from "localforage";
 import { documentId } from "./types";
-import { BrowserBase } from "./browser-base";
+import BrowserBase from "./browser-base";
+/**
+ * Collection
+ */
 export default class Collection<T> {
   public lf: LocalForage;
-
   constructor(
     private readonly browserBase: BrowserBase,
     private readonly collectionName: string
