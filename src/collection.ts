@@ -23,16 +23,16 @@ export default class Collection<T> {
 
   public delete() {
     const { browserBase, collectionName, deleteFromQueue } = this;
-    browserBase.deleteCollectionQueue.queue.push(collectionName);
-    if (browserBase.deleteCollectionQueue.running === false) {
-      browserBase.deleteCollectionQueue.running = true;
+    browserBase._deleteCollectionQueue.queue.push(collectionName);
+    if (browserBase._deleteCollectionQueue.running === false) {
+      browserBase._deleteCollectionQueue.running = true;
       deleteFromQueue();
     }
   }
   private deleteFromQueue() {
-    if (this.browserBase.deleteCollectionQueue.queue.length) {
-      let collectionToDelete = this.browserBase.deleteCollectionQueue.queue[0];
-      this.browserBase.deleteCollectionQueue.queue.shift();
+    if (this.browserBase._deleteCollectionQueue.queue.length) {
+      let collectionToDelete = this.browserBase._deleteCollectionQueue.queue[0];
+      this.browserBase._deleteCollectionQueue.queue.shift();
       this.lf
         .dropInstance({
           name: this.browserBase.dbName,
@@ -42,7 +42,7 @@ export default class Collection<T> {
           this.deleteFromQueue();
         });
     } else {
-      this.browserBase.deleteCollectionQueue.running = false;
+      this.browserBase._deleteCollectionQueue.running = false;
     }
   }
 

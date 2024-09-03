@@ -1,6 +1,6 @@
 import { expect, it, describe } from "vitest";
 import "fake-indexeddb/auto";
-import createBroserBase, { BrowserBase } from "../src";
+import createBroserBase, { BrowserBase } from "../src/browser-base";
 
 describe("browser-base test", () => {
   let browserBase: BrowserBase;
@@ -10,4 +10,6 @@ describe("browser-base test", () => {
     browserBase.collection("first-collection");
     const actual = indexedDB.open(DB_NAME);
   });
+
+  it("");
 });

@@ -1,7 +1,3 @@
-import BrowserBase from "./browser-base";
-
-export default function createBrowserBase(dbName: string) {
-  return new BrowserBase(dbName);
+export default class browserBase {
+  public _errorMessage = [] as string[];
 }
-
-export { default as BrowserBase } from "./browser-base";

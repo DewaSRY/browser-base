@@ -5,7 +5,7 @@
     "url": ""
   },
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.4",
   "type": "module",
   "files": [
     "dist"
@@ -24,7 +24,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "pub": "npm run build && npm publish --access public "
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
