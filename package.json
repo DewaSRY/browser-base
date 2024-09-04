@@ -2,9 +2,12 @@
   "name": "@sdewa/browser-base",
   "homepage": "https://google.com",
   "license": "MIT",
+  "description": "A tool to help developer store data ofline on browser",
   "repository": {
-    "url": ""
+    "type": "git",
+    "url": "https://github.com/DewaSRY/browser-base"
   },
+  "author": "Dewa Surya Ariesta",
   "private": false,
   "version": "0.0.6",
   "type": "module",
