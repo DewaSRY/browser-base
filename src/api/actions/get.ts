@@ -1,4 +1,5 @@
-import Collection from "@/api/collection";
+import Collection from "@/api/selector/collection";
+
 import { documentId } from "@/types";
 
 export default async function get<T>(

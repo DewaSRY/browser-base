@@ -1,4 +1,5 @@
-import Collection from "@/api/collection";
+import Collection from "@/api/selector/collection";
+
 import BrowserBase from "@/browser-base";
 // import isSubSet from "@/utils/isSubset";
 

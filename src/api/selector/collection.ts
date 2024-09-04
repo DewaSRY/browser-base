@@ -1,14 +1,11 @@
-/**
- *
- */
 import localForage from "localforage";
 import BrowserBase from "@/browser-base";
 import { CollectionFilter } from "@/types";
 
 //Filter
-import ftLimit from "./limit";
-import ftOrderBy from "./orderBy";
-import ftSkip from "./skip";
+import ftLimit from "@/api/api-utils/limit";
+import ftOrderBy from "@/api/api-utils/orderBy";
+import ftSkip from "@/api/api-utils/skip";
 import fkById from "./byId";
 
 //action

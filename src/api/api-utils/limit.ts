@@ -1,6 +1,6 @@
-import Collection from "@/api/collection";
+import Collection from "@/api/selector/collection";
 
-export default function byId<T>(collection: Collection<T>, id: string) {
+export default function limit<T>(collection: Collection<T>, limit: number) {
   if (!collection._filter) {
     collection._filter = {
       limit: 0,
@@ -12,6 +12,6 @@ export default function byId<T>(collection: Collection<T>, id: string) {
   }
   collection._filter = {
     ...collection._filter,
-    id,
+    limit,
   };
 }

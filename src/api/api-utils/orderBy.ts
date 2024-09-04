@@ -1,6 +1,10 @@
-import Collection from "@/api/collection";
+import Collection from "@/api/selector/collection";
 
-export default function limit<T>(collection: Collection<T>, limit: number) {
+export default function orderBy<T>(
+  collection: Collection<T>,
+  orderBy: keyof T,
+  order: "desc" | "asc" = "asc"
+) {
   if (!collection._filter) {
     collection._filter = {
       limit: 0,
@@ -12,6 +16,7 @@ export default function limit<T>(collection: Collection<T>, limit: number) {
   }
   collection._filter = {
     ...collection._filter,
-    limit,
+    orderBy,
+    order,
   };
 }

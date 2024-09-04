@@ -1,4 +1,4 @@
-import Collection from "@/api/collection";
+import Collection from "@/api/selector/collection";
 
 export default function skip<T>(collection: Collection<T>, skip: number) {
   if (!collection._filter) {

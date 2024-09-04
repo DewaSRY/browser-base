@@ -1,4 +1,4 @@
-import Collection from "@/api/collection";
+import Collection from "@/api/selector/collection";
 import Logger from "@/utils/logger";
 
 //action
