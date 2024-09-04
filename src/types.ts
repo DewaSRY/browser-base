@@ -10,5 +10,4 @@ export type CollectionFilter<T> = {
   skip: number;
   orderBy: keyof T | "";
   order: "desc" | "asc" | "";
-  id: string;
 };

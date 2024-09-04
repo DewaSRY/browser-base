@@ -7,7 +7,6 @@ export default function skip<T>(collection: Collection<T>, skip: number) {
       skip: 0,
       orderBy: "",
       order: "",
-      id: "",
     };
   }
 

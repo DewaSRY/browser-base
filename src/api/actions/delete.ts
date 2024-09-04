@@ -1,25 +1,26 @@
-import Collection from "@/api/selector/collection";
-
 import BrowserBase from "@/browser-base";
+import Collection from "@/api/selector/collection";
+import Byid from "@/api/selector/by-id";
+
 // import isSubSet from "@/utils/isSubset";
 
 /**
  *fk delete is delete factory use to delete something on data base base on the paramater pass to it
  * @param parent
  */
+
+export default function fkDelete(parent: BrowserBase): Promise<void>;
+export default function fkDelete<T>(parent: Collection<T>): Promise<void>;
+export default function fkDelete<T, U>(parent: Byid<U>): Promise<void>;
 export default function fkDelete<T, U = unknown>(parent: T) {
   if (parent instanceof BrowserBase) {
-    //delete database
     return deleteDb(parent);
   }
   if (parent instanceof Collection) {
-    if (parent._filter) {
-      // if have filter
-      return deleteDataById<U>(parent);
-    } else {
-      // if there is no filter
-      return deleteCollection(parent);
-    }
+    return deleteCollection(parent);
+  }
+  if (parent instanceof Byid) {
+    return deleteDataById<U>(parent);
   }
 }
 function deleteDb(parent: BrowserBase) {
@@ -43,7 +44,6 @@ function _deleteFromQueue(collection: Collection<unknown>) {
   if (_browserBase._deleteCollectionQueue.queue.length) {
     collectionToDelete = _browserBase._deleteCollectionQueue.queue[0];
     _browserBase._deleteCollectionQueue.queue.shift();
-
     return lf
       .dropInstance({
         name: _browserBase.dbName,
@@ -61,12 +61,13 @@ function _deleteFromQueue(collection: Collection<unknown>) {
   }
 }
 
-function deleteDataById<T>(collection: Collection<T>) {
-  const { lf, _filter, _browserBase } = collection;
+function deleteDataById<T>(byId: Byid<T>) {
+  const { collection, id } = byId;
+  const { lf, _browserBase } = collection;
   let docsToSets: string[] = [];
   return lf
     .iterate<T, void>((_value, key) => {
-      if (key === _filter?.id) {
+      if (key === id) {
         docsToSets.push(key);
       }
     })
@@ -74,10 +75,7 @@ function deleteDataById<T>(collection: Collection<T>) {
       docsToSets.forEach((key) => {
         lf.removeItem(key);
       });
-
-      _browserBase._logger.warn(
-        `sucess full delete data with id '${_filter?.id}'`
-      );
+      _browserBase._logger.warn(`sucess full delete data with id '${id}'`);
       collection._resetFilter();
     });
 }

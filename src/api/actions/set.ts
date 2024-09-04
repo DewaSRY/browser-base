@@ -1,4 +1,4 @@
-import Collection from "@/api/selector/collection";
+import ById from "@/api/selector/by-id";
 
 import { documentId } from "@/types";
 
@@ -9,43 +9,26 @@ import { documentId } from "@/types";
  * @returns
  */
 
-export default function set<T>(
-  collection: Collection<T>,
+export default async function set<T>(
+  byId: ById<T>,
   object: Partial<T>
-): Promise<documentId<T>>;
-export default function set<T>(collection: Collection<T>, object: Partial<T>) {
-  const { _filter, lf, _browserBase } = collection;
-  return new Promise((resolve, reject) => {
-    if (!_filter) {
-      reject(
-        _browserBase._logger.error("pelase add filter before run set method")
-      );
-    } else {
-      let prevobject: T | null = null;
-      lf.iterate<T, void>((velue, key) => {
-        if (key === _filter.id) {
-          prevobject = velue;
-        }
-      }).then(() => {
-        if (!prevobject) {
-          reject(
-            _browserBase._logger.error(
-              `object with id '${_filter.id}' not found`
-            )
-          );
-        } else {
-          let newObject = {
-            ...prevobject,
-            ...object,
-            _id: _filter.id,
-          };
-          let { _id, ...updatedata } = newObject;
-          lf.setItem<T>(_filter.id, updatedata as T);
-          _browserBase._logger.log("success update ", newObject as Object);
-          collection._resetFilter();
-          resolve(newObject);
-        }
-      });
-    }
-  });
+): Promise<documentId<T> | null> {
+  const { collection, id } = byId;
+  const { lf, _browserBase } = collection;
+  let prevobject: T | null = null;
+  prevobject = await lf.getItem(id);
+  if (!prevobject) {
+    _browserBase._logger.error(`object with id '${id}' not found`);
+    return null;
+  }
+  let newObject = {
+    ...prevobject,
+    ...object,
+    _id: id,
+  };
+  let { _id, ...updatedata } = newObject;
+  lf.setItem<T>(id, updatedata as T);
+  _browserBase._logger.log("success update ", newObject as Object);
+  collection._resetFilter();
+  return newObject as documentId<T>;
 }

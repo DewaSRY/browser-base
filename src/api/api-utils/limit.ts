@@ -7,7 +7,6 @@ export default function limit<T>(collection: Collection<T>, limit: number) {
       skip: 0,
       orderBy: "",
       order: "",
-      id: "",
     };
   }
   collection._filter = {

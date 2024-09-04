@@ -6,13 +6,13 @@ import { CollectionFilter } from "@/types";
 import ftLimit from "@/api/api-utils/limit";
 import ftOrderBy from "@/api/api-utils/orderBy";
 import ftSkip from "@/api/api-utils/skip";
-import fkById from "./byId";
 
 //action
 import ftAdd from "@/api/actions/add";
 import fkDelete from "@/api/actions/delete";
-import fkSet from "@/api/actions/set";
 import fkGet from "@/api/actions/get";
+
+import ById from "./by-id";
 
 // import Document from "@/api/selector/doc";
 /**
@@ -69,17 +69,11 @@ export default class Collection<T> {
   /**
    * by id will specify an action, which min some follow up action only apply for certent data
    *
-   * `await db.collection<User>("user").by("<uuid>").get() // will return the data match id `
-   *
-   * `await db.collection<User>("user").by("<uuid>").set({name: "new bane"}) // will update the data match id `
-   *
-   * `await db.collection<User>("user").by("<uuid>").delete() // will delete the data match id `
    * @param id
    * @returns
    */
   public byId(id: string) {
-    fkById(this, id);
-    return this;
+    return new ById(this, id);
   }
   /**
    * add will adding data to the collection
@@ -92,32 +86,18 @@ export default class Collection<T> {
   }
   /**
    * delete without specify the data id will delete the collection
-   *
    * `await db.collection<User>("user").delete() //wil delete the collection`
    * @returns
    */
-  public delete() {
-    return fkDelete<typeof this, T>(this);
-  }
-  /**
-   * set will update data match the id.
-   *
-   * if you not passing id before call it. it will throw an error
-   * @param object
-   * @returns
-   */
-  public async set(object: Partial<T>) {
-    return await fkSet<T>(this, object);
+  public async delete() {
+    return await fkDelete(this);
   }
   /**
    * get use to query data
    *
    * `await db.collection<User>("user").get() // will return get all data on collection `
    *
-   * `await db.collection<User>("user").by("<uuid>").get() // will return data match the id `
-   *
    * `await db.collection<User>("user").limit(10).skip(5).get() // return data index 6 to 15 `
-   *
    *
    * `await db.collection<User>("user").orderBy("age").get() // retunr data will order by age `
    *

@@ -11,7 +11,6 @@ export default function orderBy<T>(
       skip: 0,
       orderBy: "",
       order: "",
-      id: "",
     };
   }
   collection._filter = {

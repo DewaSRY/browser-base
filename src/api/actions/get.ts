@@ -1,16 +1,20 @@
 import Collection from "@/api/selector/collection";
+import ById from "@/api/selector/by-id";
 
 import { documentId } from "@/types";
 
 export default async function get<T>(
   parent: Collection<T>
 ): Promise<documentId<T>[]>;
+export default async function get<T>(
+  parent: ById<T>
+): Promise<documentId<T> | null>;
 export default async function get<T>(parent: T) {
+  if (parent instanceof ById) {
+    return await getByKey(parent);
+  }
   if (parent instanceof Collection) {
     if (parent._filter) {
-      if (parent._filter.id) {
-        return await getByKey(parent);
-      }
       // if have filter
       return getByFilter(parent);
     } else {
@@ -36,22 +40,22 @@ async function getAll<T>(collection: Collection<T>): Promise<documentId<T>[]> {
     });
 }
 
-async function getByKey<T>(
-  collection: Collection<T>
-): Promise<documentId<T>[] | null> {
-  const { lf, _filter, _browserBase } = collection;
-  return lf.getItem<T>(_filter?.id as string).then((data) => {
+async function getByKey<T>(byId: ById<T>): Promise<documentId<T> | null> {
+  const { collection, id } = byId;
+  const { lf, _browserBase } = collection;
+
+  return lf.getItem<T>(id as string).then((data) => {
     if (!data) {
-      _browserBase._logger.warn(`data with id '${_filter?.id}' not found`);
+      _browserBase._logger.warn(`data with id '${id}' not found`);
       return null;
     }
     const getData = {
       ...data,
-      _id: _filter?.id,
+      _id: id,
     };
     _browserBase._logger.log(`data get `, getData);
     collection._resetFilter();
-    return [getData] as documentId<T>[];
+    return getData as documentId<T>;
   });
 }
 
