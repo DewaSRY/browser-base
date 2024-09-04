@@ -38,6 +38,10 @@ describe("browser-base test get all data", () => {
     const actual = await userCollection.limit(5).skip(5).get();
     expect(actual.length).toBe(5);
   });
+  it("get data order in reverse", async () => {
+    const actual = await userCollection.orderBy("age", "desc").get();
+    expect(actual.length).toBe(5);
+  });
   it("get data by key ", async () => {
     const name = "hallo";
     const age = 10;

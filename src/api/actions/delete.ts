@@ -9,21 +9,22 @@ import BrowserBase from "@/browser-base";
 export default function fkDelete<T, U = unknown>(parent: T) {
   if (parent instanceof BrowserBase) {
     //delete database
-    deleteDb(parent);
+    return deleteDb(parent);
   }
   if (parent instanceof Collection) {
     if (parent._filter) {
       // if have filter
-      deleteDataById<U>(parent);
+      return deleteDataById<U>(parent);
     } else {
       // if there is no filter
-      deleteCollection(parent);
+      return deleteCollection(parent);
     }
   }
 }
 function deleteDb(parent: BrowserBase) {
-  const { dbName } = parent;
+  const { dbName, _logger } = parent;
   indexedDB.deleteDatabase(dbName);
+  _logger.warn(`deleting database '${dbName}'`);
 }
 
 function deleteCollection(collection: Collection<unknown>) {
@@ -37,32 +38,45 @@ function deleteCollection(collection: Collection<unknown>) {
 
 function _deleteFromQueue(collection: Collection<unknown>) {
   const { _browserBase, lf } = collection;
+  let collectionToDelete = "";
   if (_browserBase._deleteCollectionQueue.queue.length) {
-    let collectionToDelete = _browserBase._deleteCollectionQueue.queue[0];
+    collectionToDelete = _browserBase._deleteCollectionQueue.queue[0];
     _browserBase._deleteCollectionQueue.queue.shift();
-    lf.dropInstance({
-      name: _browserBase.dbName,
-      storeName: collectionToDelete,
-    }).then(() => {
-      _deleteFromQueue(collection);
-    });
+
+    return lf
+      .dropInstance({
+        name: _browserBase.dbName,
+        storeName: collectionToDelete,
+      })
+      .then(() => {
+        _browserBase._logger.warn(
+          `success full delete collection '${collectionToDelete}'`
+        );
+        _deleteFromQueue(collection);
+      });
   } else {
     _browserBase._deleteCollectionQueue.running = false;
+    return null;
   }
 }
 
 function deleteDataById<T>(collection: Collection<T>) {
-  const { lf, _filter } = collection;
+  const { lf, _filter, _browserBase } = collection;
   let docsToSets: string[] = [];
-  new Promise(() => {
-    lf.iterate<T, void>((_value, key) => {
+  return lf
+    .iterate<T, void>((_value, key) => {
       if (key === _filter?.id) {
         docsToSets.push(key);
       }
-    }).then(() => {
+    })
+    .then(() => {
       docsToSets.forEach((key) => {
         lf.removeItem(key);
       });
+
+      _browserBase._logger.warn(
+        `sucess full delete data with id '${_filter?.id}'`
+      );
+      collection._resetFilter();
     });
-  });
 }

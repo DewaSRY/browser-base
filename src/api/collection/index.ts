@@ -65,8 +65,7 @@ export default class Collection<T> {
   }
 
   public delete() {
-    if (!this._filter) return;
-    fkDelete<typeof this, T>(this);
+    return fkDelete<typeof this, T>(this);
   }
 
   public async set(object: Partial<T>) {

@@ -23,8 +23,8 @@ export default class BrowserBase {
     return collection as Collection<T>;
   }
 
-  public delete() {
-    fkDelete(this);
+  public async delete() {
+    return await fkDelete(this);
   }
 
   public setConfig(isDbug: boolean) {
