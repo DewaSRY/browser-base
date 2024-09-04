@@ -13,11 +13,11 @@ export default async function add<T>(
   key?: string
 ): Promise<documentId<T>> {
   const { lf, _browserBase, collectionName } = collection;
-  return new Promise((resolve, _reject) => {
-    if (!key) {
-      key = crypto.randomUUID();
-    }
-    return lf
+  if (!key) {
+    key = crypto.randomUUID();
+  }
+  return new Promise(async (resolve, _reject) => {
+    return await lf
       .setItem(key, data)
       .then((value) => {
         _browserBase._logger.log(`adding to  ${collectionName} `, {
