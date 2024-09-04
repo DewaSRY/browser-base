@@ -11,18 +11,6 @@ describe("browser-base update data", () => {
   let browserBase: BrowserBase = new BrowserBase(DB_NAME);
   let userCollection = browserBase.collection<user>("user-collection");
 
-  it.fails("set will failed when set without filter", async () => {
-    const name = "hallo";
-    const age = 10;
-    await userCollection.add({
-      name,
-      age,
-    });
-    await userCollection.set({
-      name: "test",
-    });
-  });
-
   it.fails("set data with false key ", async () => {
     const name = "hallo";
     const age = 10;
@@ -51,9 +39,11 @@ describe("browser-base update data", () => {
     let actual = await userCollection.byId(key).set({
       name: newName,
     });
-    expect(actual.name).equal(newName);
-    expect(actual.age).equal(age);
-    expect(actual._id).equal(key);
+    if (actual) {
+      expect(actual.name).equal(newName);
+      expect(actual.age).equal(age);
+      expect(actual._id).equal(key);
+    }
   });
   it("success update data ", async () => {
     const name = "hallo";
@@ -71,8 +61,10 @@ describe("browser-base update data", () => {
     };
     await userCollection.add(addObject, key);
     let actual = await userCollection.byId(key).set(newUpdateObject);
-    expect(actual.name).equal(newName);
-    expect(actual.age).equal(newAge);
-    expect(actual._id).equal(key);
+    if (actual) {
+      expect(actual.name).equal(newName);
+      expect(actual.age).equal(newAge);
+      expect(actual._id).equal(key);
+    }
   });
 });

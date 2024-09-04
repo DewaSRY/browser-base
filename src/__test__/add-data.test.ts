@@ -17,7 +17,6 @@ describe("browser-base test", () => {
       name,
       age,
     });
-    // console.log(actual);
     expect(actual.name).equal(name);
     expect(actual.age).equal(age);
   });

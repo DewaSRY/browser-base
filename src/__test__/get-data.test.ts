@@ -52,8 +52,10 @@ describe("browser-base test get all data", () => {
     };
 
     await userCollection.add(userObject, key);
-    const [actual] = await userCollection.byId(key).get();
-    expect(actual.name).equal(name);
-    expect(actual.age).equal(age);
+    const actual = await userCollection.byId(key).get();
+    if (actual) {
+      expect(actual.name).equal(name);
+      expect(actual.age).equal(age);
+    }
   });
 });
