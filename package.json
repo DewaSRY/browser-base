@@ -1,6 +1,6 @@
 {
   "name": "@sdewa/browser-base",
-  "homepage": "https://google.com",
+  "homepage": "https://github.com/DewaSRY/browser-base",
   "license": "MIT",
   "description": "A tool to help developer store data ofline on browser",
   "repository": {
@@ -8,8 +8,28 @@
     "url": "https://github.com/DewaSRY/browser-base"
   },
   "author": "Dewa Surya Ariesta",
+  "keywords": [
+    "indexdb",
+    "indexDB",
+    "browserbase",
+    "frontend",
+    "parsist",
+    "parsistent",
+    "data",
+    "memory",
+    "query",
+    "orm",
+    "localforage",
+    "browserbase",
+    "react",
+    "vue",
+    "angular",
+    "next",
+    "javascript",
+    "typescript"
+  ],
   "private": false,
-  "version": "0.0.6",
+  "version": "0.0.8",
   "type": "module",
   "files": [
     "dist"
