@@ -9,7 +9,6 @@ and browser base inspire by [localbase](https://github.com/samuk190/localbase).
 ## Badges
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
 ## Getting Started
 

@@ -1,6 +1,6 @@
 {
   "name": "@sdewa/browser-base",
-  "homepage": "https://github.com/DewaSRY/browser-base",
+  "homepage": "https://browserbase.vercel.app",
   "license": "MIT",
   "description": "A tool to help developer store data ofline on browser",
   "repository": {
