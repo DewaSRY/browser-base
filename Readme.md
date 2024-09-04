@@ -34,7 +34,7 @@ browserBase.collection<user>("user-collection");
 
 //the broser base will store data on 'user collection',
 //if you don't pass a key on the key param its will generate uuid
-browserBase.collection<user>("user-collection").ad({
+browserBase.collection<user>("user-collection").add({
     name: "some name",
     age:10
 }, "some key")
@@ -43,7 +43,7 @@ browserBase.collection<user>("user-collection").ad({
 
 //recomended to not pass anything on the key param
 //so the data guaranted to be unique
-browserBase.collection<user>("user-collection").ad({
+browserBase.collection<user>("user-collection").add({
     name: "some name",
     age:10
 })
