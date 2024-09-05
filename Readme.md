@@ -1,6 +1,9 @@
 # Browser base
 
-BrowserBase tool to work with ofline data on browser.it allow you store your data on browser indexdb database. it also build on top of typescrip with simple interface
+BrowserBase is a TypeScript-based tool designed to work with offline
+data in the browser. It provides an easy-to-use interface for storing
+and managing data in the browser's IndexedDB database, making it
+simple to handle offline storage efficiently.
 
 Browser base build on top [LocalForage](https://github.com/localForage/localForage).
 
@@ -63,8 +66,7 @@ browserBase.collection<user>("user-collection").get()
 
 //it's can alos use by specify the key will query
 browserBase.collection<user>("user-collection".).byId('<uuid>').get()
-//for simplifie the interface it will return an array with one match value
-//[{name: "somename", age:10, _id: "<uuid>"}]
+//{name: "somename", age:10, _id: "<uuid>"}
 
 //browserbase also have limit and skip interface
 browserBase.collection<user>("user-collection".).limit(5).skip(5).get();
@@ -100,15 +102,12 @@ delete data
 ```typescript
 //it will delete data match the id
 browserBase.collection<user>("user-collection").byId("<uuid>").delete();
-//  {name: "new name", age:11, _id: "<uuid>"}
 
 //it will delete the collection
 browserBase.collection<user>("user-collection").delete();
-//  {name: "new name", age:11, _id: "<uuid>"}
 
 //it will delete the database
 browserBase.delete();
-//  {name: "new name", age:11, _id: "<uuid>"}
 ```
 
 ## Authors

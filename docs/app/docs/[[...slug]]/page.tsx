@@ -1,13 +1,13 @@
-import { getPage, getPages } from '@/app/source';
-import type { Metadata } from 'next';
+import { getPage, getPages } from "@/app/source";
+import type { Metadata } from "next";
 import {
   DocsPage,
   DocsBody,
   DocsDescription,
   DocsTitle,
-} from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
-import defaultComponents from 'fumadocs-ui/mdx';
+} from "fumadocs-ui/page";
+import { notFound } from "next/navigation";
+import defaultComponents from "fumadocs-ui/mdx";
 
 export default async function Page({
   params,
@@ -39,7 +39,6 @@ export async function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug?: string[] } }) {
   const page = getPage(params.slug);
   if (!page) notFound();
-
   return {
     title: page.data.title,
     description: page.data.description,
